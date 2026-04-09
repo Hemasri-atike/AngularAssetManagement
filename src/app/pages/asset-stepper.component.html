@@ -1,0 +1,242 @@
+<div class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-5xl mx-auto">
+    <!-- Header Section -->
+    <div class="text-center mb-10">
+      <h1 class="text-3xl font-extrabold text-slate-900 sm:text-4xl mt-4">Asset Registration</h1>
+      <p class="mt-3 text-lg text-slate-500">Please provide the asset details in the steps below.</p>
+    </div>
+
+    <!-- Stepper Container -->
+    <div class="bg-white shadow-xl rounded-2xl overflow-hidden border border-slate-100">
+      <mat-stepper linear #stepper class="custom-stepper">
+        
+        <!-- STEP 1: Basic Info -->
+        <mat-step [stepControl]="basicForm">
+          <ng-template matStepLabel>Basic Info</ng-template>
+          <form [formGroup]="basicForm" class="p-8">
+            <h2 class="text-xl font-semibold text-slate-800 mb-6 flex items-center gap-2">
+              <span class="p-2 bg-blue-50 text-blue-600 rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                </svg>
+              </span>
+              Basic Information
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Asset ID</mat-label>
+                <input matInput formControlName="assetId" placeholder="e.g. AST-001">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Asset Number</mat-label>
+                <input matInput formControlName="assetNumber" placeholder="e.g. 1000234">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Sub Asset Number</mat-label>
+                <input matInput formControlName="subAssetNumber" placeholder="e.g. 0">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Asset Class</mat-label>
+                <input matInput formControlName="assetClass" placeholder="e.g. LAPTOP">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="w-full md:col-span-2">
+                <mat-label>Description</mat-label>
+                <textarea matInput formControlName="assetDescription" rows="3" placeholder="Enter detailed description..."></textarea>
+              </mat-form-field>
+            </div>
+
+            <div class="mt-8 flex justify-end">
+              <button mat-flat-button color="primary" matStepperNext class="px-8 py-2 rounded-lg font-medium">
+                Next Step
+              </button>
+            </div>
+          </form>
+        </mat-step>
+
+        <!-- STEP 2: Ownership -->
+        <mat-step [stepControl]="ownershipForm">
+          <ng-template matStepLabel>Ownership</ng-template>
+          <form [formGroup]="ownershipForm" class="p-8">
+            <h2 class="text-xl font-semibold text-slate-800 mb-6 flex items-center gap-2">
+              <span class="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+                </svg>
+              </span>
+              Ownership Details
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Intender Name</mat-label>
+                <input matInput formControlName="intenderName">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Custodian Name</mat-label>
+                <input matInput formControlName="custodianName">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Location ID</mat-label>
+                <input matInput formControlName="locationId">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Block</mat-label>
+                <input matInput formControlName="block">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="w-full md:col-span-2">
+                <mat-label>Department</mat-label>
+                <input matInput formControlName="department">
+              </mat-form-field>
+            </div>
+
+            <div class="mt-8 flex justify-between">
+              <button mat-stroked-button matStepperPrevious>Back</button>
+              <button mat-flat-button color="primary" matStepperNext>Next Step</button>
+            </div>
+          </form>
+        </mat-step>
+
+        <!-- STEP 3: Technical -->
+        <mat-step [stepControl]="technicalForm">
+          <ng-template matStepLabel>Technical</ng-template>
+          <form [formGroup]="technicalForm" class="p-8">
+            <h2 class="text-xl font-semibold text-slate-800 mb-6 flex items-center gap-2">
+              <span class="p-2 bg-emerald-50 text-emerald-600 rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+                </svg>
+              </span>
+              Technical Specifications
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Serial Number</mat-label>
+                <input matInput formControlName="serialNumber">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>MAC ID</mat-label>
+                <input matInput formControlName="macId">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Model</mat-label>
+                <input matInput formControlName="model">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Material Number</mat-label>
+                <input matInput formControlName="materialNumber">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="w-full md:col-span-2">
+                <mat-label>GR Number</mat-label>
+                <input matInput formControlName="grNumber">
+              </mat-form-field>
+            </div>
+
+            <div class="mt-8 flex justify-between">
+              <button mat-stroked-button matStepperPrevious>Back</button>
+              <button mat-flat-button color="primary" matStepperNext>Next Step</button>
+            </div>
+          </form>
+        </mat-step>
+
+        <!-- STEP 4: Financial -->
+        <mat-step [stepControl]="financialForm">
+          <ng-template matStepLabel>Financial</ng-template>
+          <form [formGroup]="financialForm" class="p-8">
+            <h2 class="text-xl font-semibold text-slate-800 mb-6 flex items-center gap-2">
+              <span class="p-2 bg-amber-50 text-amber-600 rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
+                  <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd" />
+                </svg>
+              </span>
+              Financial Records
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Cost Center</mat-label>
+                <input matInput formControlName="costCenter">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Vendor</mat-label>
+                <input matInput formControlName="assetVendor">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>PO Number</mat-label>
+                <input matInput formControlName="poNumber">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>WBS Number</mat-label>
+                <input matInput formControlName="wbsNumber">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Year of Purchase</mat-label>
+                <input matInput formControlName="yearOfPurchase">
+              </mat-form-field>
+
+              <!-- Dates with DatePicker -->
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Capitalization Date</mat-label>
+                <input matInput [matDatepicker]="capPicker" formControlName="capitalizationDate">
+                <mat-datepicker-toggle matIconSuffix [for]="capPicker"></mat-datepicker-toggle>
+                <mat-datepicker #capPicker></mat-datepicker>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Installation Date</mat-label>
+                <input matInput [matDatepicker]="instPicker" formControlName="installationDate">
+                <mat-datepicker-toggle matIconSuffix [for]="instPicker"></mat-datepicker-toggle>
+                <mat-datepicker #instPicker></mat-datepicker>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Acceptance Date</mat-label>
+                <input matInput [matDatepicker]="accPicker" formControlName="acceptDate">
+                <mat-datepicker-toggle matIconSuffix [for]="accPicker"></mat-datepicker-toggle>
+                <mat-datepicker #accPicker></mat-datepicker>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Expiry Date</mat-label>
+                <input matInput [matDatepicker]="expPicker" formControlName="expiryDate">
+                <mat-datepicker-toggle matIconSuffix [for]="expPicker"></mat-datepicker-toggle>
+                <mat-datepicker #expPicker></mat-datepicker>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="w-full md:col-span-2">
+                <mat-label>Remarks</mat-label>
+                <textarea matInput formControlName="remarks" rows="2"></textarea>
+              </mat-form-field>
+            </div>
+
+            <div class="mt-8 flex justify-between">
+              <button mat-stroked-button matStepperPrevious>Back</button>
+              <button mat-flat-button color="accent" (click)="submit()" class="px-10">
+                Complete Registration
+              </button>
+            </div>
+          </form>
+        </mat-step>
+
+      </mat-stepper>
+    </div>
+  </div>
+</div>
