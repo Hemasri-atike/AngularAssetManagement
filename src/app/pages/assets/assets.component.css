@@ -1,0 +1,130 @@
+.table-container {
+  max-width: 100%;
+  overflow-x: auto;
+  border-radius: 1.5rem;
+}
+
+/* Sticky Column Styling */
+.mat-column-actions {
+  min-width: 120px;
+  background-color: white !important;
+  z-index: 10 !important;
+}
+
+.mat-header-row .mat-column-actions {
+  background-color: #f8fafc !important; /* bg-slate-50 */
+  z-index: 11 !important;
+}
+
+/* Syncfusion Grid Base Styles */
+:host ::ng-deep .e-grid {
+    border: none !important;
+    border-radius: 20px !important;
+    font-family: 'Inter', sans-serif !important;
+}
+
+:host ::ng-deep .e-grid .e-headercell {
+    background-color: #f8fafc !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    padding: 16px !important;
+}
+
+:host ::ng-deep .e-grid .e-headertext {
+    color: #475569 !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+}
+
+:host ::ng-deep .e-grid .e-rowcell {
+    padding: 12px 16px !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+}
+
+/* Custom Dropdown Styling */
+:host ::ng-deep .custom-dropdown.e-dropdownlist {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 12px !important;
+    color: white !important;
+}
+
+:host ::ng-deep .custom-dropdown.e-dropdownlist .e-input-group-icon {
+    color: white !important;
+}
+
+:host ::ng-deep .custom-dropdown.e-dropdownlist .e-input {
+    color: white !important;
+    font-weight: 700 !important;
+}
+
+/* Rating Component Customization */
+:host ::ng-deep .custom-rating .e-rating-item.e-selected .e-rating-icon {
+    color: #f59e0b !important;
+}
+
+:host ::ng-deep .custom-rating .e-rating-icon {
+    font-size: 14px !important;
+}
+
+/* Progress Bar Overrides */
+.pbar {
+    border-radius: 10px;
+}
+
+/* Animations */
+@keyframes pulse-slow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.animate-pulse {
+    animation: pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Hide performance message initially */
+.e-hide {
+    display: none;
+}
+
+/* Subtle shadow for the sticky column to separate it from scrolling content */
+.sticky-column-cell, .sticky-column-header {
+  border-left: 1px solid rgba(226, 232, 240, 0.8) !important; /* border-slate-200 */
+}
+
+/* Modern Table Cell Styling */
+.mat-mdc-header-cell {
+  background-color: #f8fafc;
+  color: #334155;
+  font-weight: 700;
+  border-bottom: 2px solid #f1f5f9 !important;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  background-color: rgba(241, 245, 249, 0.4);
+}
+
+.mat-mdc-cell {
+  border-bottom: 1px solid #f1f5f9 !important;
+  color: #475569;
+}
+
+/* Custom Paginator Overlay Fix */
+::v-deep .mat-mdc-paginator-container {
+  justify-content: flex-end;
+  padding: 0;
+}
+
+/* Input Placeholder Modernization */
+.italic-placeholder:empty::before {
+  content: 'N/A';
+  color: #cbd5e1;
+  font-style: italic;
+  font-size: 0.8rem;
+}
+
+/* Fix for Material Table with background opacity */
+.mat-mdc-table {
+  background: transparent !important;
+}

@@ -1,73 +1,136 @@
-<div class="p-6">
+<div class="min-h-screen bg-slate-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-[95%] mx-auto">
+        <!-- Premium Header Section -->
+        <div class="mb-8 p-4 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 rounded-3xl shadow-2xl relative overflow-hidden">
+            <div class="absolute inset-0 opacity-20 pointer-events-none transform -skew-y-6 translate-y-12 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+            
+            <div class="relative flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+                <div class="flex-1">
+                    <h1 class="text-4xl font-black text-white tracking-tight flex items-center gap-3">
+                        <span class="p-2 bg-white/20 rounded-2xl backdrop-blur-md border border-white/20">
+                            <mat-icon class="scale-125">inventory_2</mat-icon>
+                        </span>
+                        Enterprise Asset Grid
+                    </h1>
+                    <p class="text-white/80 mt-2 font-medium">High-performance asset monitoring and management system</p>
+                </div>
 
-  <!-- HEADER -->
-  <div class="flex flex-col md:flex-row justify-between mb-6 gap-4">
-    
-    <div>
-      <h2 class="text-3xl font-bold">Asset Management</h2>
-      <p class="text-gray-500 text-sm">Manage your assets</p>
+                <div class="flex flex-wrap items-center gap-4 bg-white/10 p-4 rounded-2xl backdrop-blur-md border border-white/10">
+                    <div class="flex flex-col gap-1">
+                        <span class="text-[10px] text-white/70 uppercase font-black tracking-widest ml-1">Data Source</span>
+                        <ejs-dropdownlist id='value' #sample index='0' width='220' [dataSource]='ddlData' (change)='valueChange($event)' [fields]='fields' [popupHeight]='height' cssClass="custom-dropdown"></ejs-dropdownlist>
+                    </div>
+
+                    <button
+                        routerLink="/add-asset"
+                        class="flex items-center gap-3 px-8 py-3.5 bg-white text-indigo-900 font-bold rounded-xl hover:bg-indigo-50 shadow-xl transition-all active:scale-95 group">
+                        <mat-icon class="group-hover:rotate-90 transition-transform duration-300">add_circle</mat-icon>
+                        <span>REGISTER ASSET</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Monitor -->
+        <div class="mb-4 flex justify-between items-center px-4">
+            <div id='msg' class="text-sm font-bold text-slate-500 bg-white px-4 py-2 rounded-full shadow-sm border border-slate-100"></div>
+            <div class="text-[10px] text-slate-400 uppercase font-black tracking-widest">Live Virtualized Environment</div>
+        </div>
+
+        <!-- Data Grid Container -->
+        <div class="bg-white shadow-2xl rounded-3xl overflow-hidden border border-slate-200 p-2">
+            <ejs-grid #overviewgrid id='overviewgrid' [dataSource]='data' [query]='query' rowHeight='50' [allowSelection]='true' [loadingIndicator]='loadingIndicator' height='500' (dataBound)='onDataBound($event)' [enableHover]='true' [selectionSettings]='selectionSettings' [filterSettings]='filterSettings' [allowSorting]='true' [allowFiltering]='true' [enableVirtualization]='true'>
+                <e-columns>
+                    <e-column type='checkbox' [allowFiltering]='false' [allowSorting]='false' width='60'></e-column>
+                    
+                    <e-column field='assetId' [visible]='false' headerText='Asset ID' width='130' [isPrimaryKey]='true'></e-column>
+                    
+                    <e-column field='assetNumber' headerText='Asset Reg #' clipMode='EllipsisWithTooltip' width='200'>
+                        <ng-template #template let-data>
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-indigo-100 flex items-center justify-center text-indigo-600">
+                                    <mat-icon class="scale-75">qr_code_2</mat-icon>
+                                </div>
+                                <span class="font-bold text-slate-800">{{data.assetNumber}}</span>
+                            </div>
+                        </ng-template>
+                    </e-column>
+
+                    <e-column field='assetClass' headerText='Classification' clipMode='EllipsisWithTooltip' width='170'></e-column>
+                    
+                    <e-column field='assetVendor' headerText='Vendor' width='200'>
+                        <ng-template #template let-data>
+                            <div class="flex flex-col">
+                                <span class="text-sm font-semibold text-slate-700">{{data.assetVendor}}</span>
+                                <span class="text-[10px] text-slate-400 capitalize">{{data.department}}</span>
+                            </div>
+                        </ng-template>
+                    </e-column>
+
+                    <e-column field='locationId' headerText='Location' width='150'>
+                        <ng-template #template let-data>
+                            <div class="flex items-center gap-2">
+                                <mat-icon class="text-slate-400 scale-75">place</mat-icon>
+                                <span class="text-sm text-slate-600">{{data.locationId}}</span>
+                            </div>
+                        </ng-template>
+                    </e-column>
+
+                    <e-column field='status' headerText='Health Status' width='150'>
+                        <ng-template #template let-data>
+                            <div [ngClass]="data.status === 'Active' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-rose-50 text-rose-600 border-rose-100'" 
+                                 class="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-tighter border text-center">
+                                {{data.status}}
+                            </div>
+                        </ng-template>
+                    </e-column>
+
+                    <e-column field='trustworthiness' headerText='Risk Level' width='160'>
+                        <ng-template #template let-data>
+                            <div class="flex items-center gap-2">
+                                <div [style.background-color]="data.trustworthiness === 'High' ? '#10b981' : data.trustworthiness === 'Sufficient' ? '#3b82f6' : '#f59e0b'" 
+                                     class="w-2 h-2 rounded-full animate-pulse"></div>
+                                <span class="text-sm font-medium">{{data.trustworthiness}}</span>
+                            </div>
+                        </ng-template>
+                    </e-column>
+
+                    <e-column field='rating' headerText='Condition' width='160'>
+                        <ng-template #template let-data>
+                            <div class="custom-rating-container">
+                                <input ejs-rating [readOnly]="true" [value]="data.rating" cssClass='custom-rating'/>
+                            </div>
+                        </ng-template>
+                    </e-column>
+
+                    <e-column field='software' headerText='Life Cycle' width='180'>
+                        <ng-template #template let-data>
+                            <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+                                <div class="h-full transition-all duration-1000"
+                                     [ngClass]="data.status === 'Active' ? 'bg-indigo-500' : 'bg-slate-300'"
+                                     [style.width.%]="softwareValue(data.software)">
+                                </div>
+                            </div>
+                            <div class="flex justify-between mt-1">
+                                <span class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">{{softwareValue(data.software)}}% Utilized</span>
+                            </div>
+                        </ng-template>
+                    </e-column>
+
+                    <e-column headerText='Actions' width='120' [allowFiltering]='false' [allowSorting]='false' textAlign='Center'>
+                        <ng-template #template let-data>
+                            <div class="flex justify-center gap-1">
+                                <button (click)="editAsset(data.assetId)" class="p-1.5 text-indigo-500 hover:bg-indigo-50 rounded-lg transition-colors">
+                                    <mat-icon class="scale-75">edit</mat-icon>
+                                </button>
+                                <button (click)="deleteAsset(data.assetId)" class="p-1.5 text-rose-500 hover:bg-rose-50 rounded-lg transition-colors">
+                                    <mat-icon class="scale-75">delete</mat-icon>
+                                </button>
+                            </div>
+                        </ng-template>
+                    </e-column>
+                </e-columns>
+            </ejs-grid>
+        </div>
     </div>
-
-    <div class="flex gap-3 items-center">
-      
-      <!-- Search -->
-      <input
-        [(ngModel)]="search"
-        (input)="handleSearch()"
-        placeholder="Search assets..."
-        class="px-4 py-2 border rounded-lg shadow-sm"
-      />
-
-      <!-- Add Button -->
-      <button
-        class="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
-        ➕ Add
-      </button>
-
-    </div>
-  </div>
-
-  <!-- TABLE -->
-  <div class="bg-white shadow rounded-xl overflow-auto">
-
-    <table mat-table [dataSource]="filteredData" class="min-w-full">
-
-      <!-- Dynamic Columns -->
-      <ng-container *ngFor="let col of allColumns" [matColumnDef]="col">
-        <th mat-header-cell *matHeaderCellDef class="font-bold">
-          {{ col }}
-        </th>
-        <td mat-cell *matCellDef="let element">
-          {{ element[col] || '-' }}
-        </td>
-      </ng-container>
-
-      <!-- ACTIONS -->
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
-        <td mat-cell *matCellDef="let element">
-
-          <button class="text-blue-600 mr-2">
-            <mat-icon>edit</mat-icon>
-          </button>
-
-          <button
-            class="text-red-600"
-            (click)="deleteAsset(element.id)">
-            <mat-icon>delete</mat-icon>
-          </button>
-
-        </td>
-      </ng-container>
-
-      <!-- HEADER -->
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-
-      <!-- ROW -->
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-    </table>
-
-  </div>
-
 </div>

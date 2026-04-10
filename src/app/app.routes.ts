@@ -1,7 +1,10 @@
 import { Routes } from '@angular/router';
 import { AssetStepperComponent } from './pages/asset-stepper.component';
+import { AssetsComponent } from './pages/assets/assets.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'add-asset', pathMatch: 'full' }, // Redirect to add-asset by default for now
-  { path: 'add-asset', component: AssetStepperComponent }
+  { path: '', redirectTo: 'assets', pathMatch: 'full' },
+  { path: 'assets', component: AssetsComponent },
+  { path: 'add-asset', component: AssetStepperComponent },
+  { path: 'add-asset/:id', component: AssetStepperComponent }
 ];
