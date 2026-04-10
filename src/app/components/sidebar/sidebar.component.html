@@ -1,0 +1,291 @@
+<!-- SIDEBAR - Main container with blue background and full height -->
+<div style="
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 221px;
+  background: rgba(0, 72, 128, 0.7);
+  backdrop-filter: blur(10px);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+">
+
+  <!-- HEADER SECTION - Shows current role and dropdown -->
+  <div style="
+    padding: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  ">
+    <div style="
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    ">
+      <div>
+        <!-- Role label -->
+        <div style="
+          font-size: 12px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          color: rgb(203, 213, 225);
+        ">Role</div>
+        <!-- Current selected role -->
+        <div style="
+          font-size: 20px;
+          font-weight: 600;
+          color: white;
+        ">{{ selectedRole }}</div>
+      </div>
+      <!-- Dropdown toggle button -->
+      <button
+        type="button"
+        (click)="toggleRolePicker()"
+        [style.color]="showRolePicker ? 'white' : 'rgba(255, 255, 255, 0.8)'"
+        [style.background]="showRolePicker ? 'rgba(255,255,255,0.1)' : 'none'"
+        style="
+          padding: 8px;
+          border-radius: 8px;
+          border: none;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        "
+        (mouseover)="setHoverStyle($event, true)"
+        (mouseout)="setHoverStyle($event, false)"
+      >
+        <span class="material-icons">expand_more</span>
+      </button>
+    </div>
+
+    <!-- Role selection dropdown -->
+    <div *ngIf="showRolePicker" style="
+      margin-top: 12px;
+    ">
+      <button
+        *ngFor="let roleOption of roleOptions"
+        type="button"
+        (click)="selectRole(roleOption)"
+        [style.background]="selectedRole === roleOption ? 'rgba(255,255,255,0.2)' : 'none'"
+        style="
+          width: 100%;
+          text-align: left;
+          padding: 8px 12px;
+          border-radius: 8px;
+          font-size: 15px;
+          color: rgba(255, 255, 255, 0.9);
+          border: none;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          margin-bottom: 4px;
+        "
+        (mouseover)="setHoverStyle($event, true)"
+        (mouseout)="setHoverStyle($event, false)"
+      >
+        {{ roleOption }}
+      </button>
+    </div>
+  </div>
+
+  <!-- NAVIGATION MENU - Scrollable menu items -->
+  <nav style="
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px;
+  ">
+    <!-- Navigation section label -->
+    <div style="
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgb(148, 163, 184);
+    ">Navigation</div>
+
+    <!-- Loop through menu items -->
+    <ng-container *ngFor="let item of menuItems">
+      <div>
+
+        <!-- MENU ITEM WITH SUBMENU -->
+        <button
+          *ngIf="item.subMenu"
+          (click)="toggleMenu(item.name)"
+          [style.background]="isGroupActive(item) ? 'rgba(255,255,255,0.1)' : 'none'"
+          style="
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 4px;
+          "
+          (mouseover)="setHoverStyle($event, true)"
+          (mouseout)="setHoverStyle($event, false)"
+        >
+          <!-- Icon and text container -->
+          <div style="
+            display: flex;
+            align-items: center;
+            gap: 12px;
+          ">
+            <span class="material-icons">{{ item.icon }}</span>
+            <span>{{ item.name }}</span>
+          </div>
+          <!-- Expand/collapse icon -->
+          <span
+            class="material-icons"
+            style="
+              transition: transform 0.3s ease;
+              transform: {{openMenus[item.name] ? 'rotate(180deg)' : 'rotate(0deg)'}};
+            "
+          >expand_more</span>
+        </button>
+
+        <!-- SUBMENU ITEMS -->
+        <div
+          *ngIf="item.subMenu && openMenus[item.name]"
+          style="
+            margin-left: 16px;
+            margin-top: 4px;
+          "
+        >
+          <ng-container *ngFor="let sub of item.subMenu">
+
+            <!-- NESTED SUBMENU (has its own submenu) -->
+            <div *ngIf="sub.subMenu">
+              <button
+                (click)="toggleMenu(sub.name)"
+                [style.background]="isGroupActive(sub) ? 'rgba(255,255,255,0.1)' : 'none'"
+                style="
+                  width: 100%;
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  padding: 8px 12px;
+                  border-radius: 8px;
+                  border: none;
+                  color: white;
+                  cursor: pointer;
+                  transition: all 0.2s ease;
+                  font-size: 14px;
+                  font-weight: 400;
+                  margin-bottom: 4px;
+                "
+                (mouseover)="setHoverStyle($event, true)"
+                (mouseout)="setHoverStyle($event, false)"
+              >
+                <div style="
+                  display: flex;
+                  align-items: center;
+                  gap: 12px;
+                  flex: 1;
+                ">
+                  <span class="material-icons" style="font-size: 14px;">{{ sub.icon }}</span>
+                  <span>{{ sub.name }}</span>
+                </div>
+                <span
+                  class="material-icons"
+                  style="
+                    font-size: 15px;
+                    transition: transform 0.3s ease;
+                    transform: {{openMenus[sub.name] ? 'rotate(180deg)' : 'rotate(0deg)'}};
+                  "
+                >expand_more</span>
+              </button>
+
+              <!-- Deep nested items -->
+              <div
+                *ngIf="openMenus[sub.name]"
+                style="margin-left: 16px; margin-top: 4px;"
+              >
+                <a
+                  *ngFor="let child of sub.subMenu"
+                  [routerLink]="child.path"
+                  [style.background]="isActive(child.path) ? 'rgba(255,255,255,0.2)' : 'none'"
+                  style="
+                    display: block;
+                    padding: 8px 12px;
+                    border-radius: 8px;
+                    text-decoration: none;
+                    color: white;
+                    font-size: 14px;
+                    transition: all 0.2s ease;
+                    margin-bottom: 4px;
+                  "
+                  (mouseover)="setHoverStyle($event, true)"
+                  (mouseout)="setHoverStyle($event, false)"
+                >
+                  {{child.name}}
+                </a>
+              </div>
+            </div>
+
+            <!-- REGULAR SUBMENU ITEM -->
+            <a
+              *ngIf="!sub.subMenu"
+              [routerLink]="sub.path"
+              [style.background]="isActive(sub.path) ? 'rgba(255,255,255,0.2)' : 'none'"
+              style="
+                display: block;
+                padding: 8px 12px;
+                border-radius: 8px;
+                text-decoration: none;
+                color: white;
+                font-size: 14px;
+                font-weight: 400;
+                transition: all 0.2s ease;
+                margin-bottom: 4px;
+              "
+              (mouseover)="setHoverStyle($event, true)"
+              (mouseout)="setHoverStyle($event, false)"
+            >
+              {{sub.name}}
+            </a>
+
+          </ng-container>
+        </div>
+
+        <!-- DIRECT LINK (no submenu) -->
+        <a
+          *ngIf="!item.subMenu"
+          [routerLink]="item.path"
+          [style.background]="isActive(item.path) ? 'rgba(255,255,255,0.2)' : 'none'"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: white;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            margin-bottom: 4px;
+          "
+          (mouseover)="setHoverStyle($event, true)"
+          (mouseout)="setHoverStyle($event, false)"
+        >
+          <span class="material-icons" style="font-size: 25px;">{{item.icon}}</span>
+          <span>{{item.name}}</span>
+        </a>
+
+      </div>
+
+    </ng-container>
+
+  </nav>
+
+</div>
